@@ -1,2 +1,12 @@
 # Online_Examination_System
 Junior Year(Third Year) First Semester Project
+
+### INTRODUCTION
+Online Examination System is an online examination program for student to enhance their education online. Online examination is an easy way to store students' marks data. Online Examination System has advanced online examination techniques using an advanced online classroom to examination student online. Students' most valuable tool is his/her education and online examination is a great tool enhancer. By using online examination, no more driving to a examination or waiting for your examination to come to you; by using online examination, you simply get online and examinations are waiting and ready to help you.
+
+### What is Online Examination System?
+Online examination is the use of the computer for examination activities, or we can say, It is the process by which a student learns via the computer with the help of a subject expert or a examination.
+
+### How it works?
+	Each student has given as Login-ID and a password. They need to login first to give exam. A student can solve as many question papers but one question paper at once. Each student solves the questions and chooses the correct answer from given options. On the basis of correct answers the marks assigned to each question is given and total marks calculated. At the end of the exam student can directly see his/her marks along with the actual answers of the the questions and the answers chosen by him/her. Thats how students can analyze where they went wrong, where they are lagging and the part/topic they need to improve. Students can also see their past performances as they are given individual Login-ID's and passwords.
+	Teachers also have important role in examination. They can set question papers and can solve sample paper. So the teachers are like super user. Thats why we give them highest privilege. They can access any data, such as they can add, delete, modify more students data. They can change the questions and answers of questions. But they can not access the student marks as these marks are calculated by computer. This program helps teachers and saves their time to check answer sheets. And also they keep track of each student by their performances.
