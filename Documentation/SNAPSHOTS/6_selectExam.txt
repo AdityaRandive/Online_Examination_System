@@ -1,0 +1,36 @@
+//Select Exam
+Option Explicit
+
+Private Sub Command1_Click(Index As Integer)
+    
+    If Index = 0 Then
+        entrypoint.Examtable = "c"
+    ElseIf Index = 1 Then
+        entrypoint.Examtable = "cpp"
+    ElseIf Index = 2 Then
+        entrypoint.Examtable = "oracle"
+    ElseIf Index = 3 Then
+        entrypoint.Examtable = "csharp"
+    End If
+        
+    Unload Me
+End Sub
+ 
+'Private Sub Command1_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+    'Command1(Index).BackColor = vbRed
+'End Sub
+
+'Private Sub Timer1_Timer()
+    
+'End Sub
+
+Private Sub Form_Unload(Cancel As Integer)
+    'if it is admin login then no exam to be conducted
+    
+    
+    If entrypoint.adminLogin = False Then
+        Load frmexam
+    Else
+        entrypoint.adminLogin = False
+    End If
+End Sub

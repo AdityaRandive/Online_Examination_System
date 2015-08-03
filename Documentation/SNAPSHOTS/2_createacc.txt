@@ -1,0 +1,99 @@
+//MIT_Admission_form
+Option Explicit
+Dim sql As String
+Dim rs As New ADODB.Recordset
+
+Private Sub Command1_Click()
+    'On Error Resume Next
+    
+    If Text1.Text = "" Then
+        MsgBox "Please Enter the Name."
+        Text1.SetFocus
+    ElseIf Text2.Text = "" Then
+        MsgBox "Please Enter the Username."
+        Text2.SetFocus
+    ElseIf Text3.Text = "" Then
+        MsgBox "Please Enter the Password."
+        Text3.SetFocus
+    ElseIf Text5.Text = "" Then
+        MsgBox "Please Enter the Emailid."
+        Text5.SetFocus
+    ElseIf Text6.Text = "" Then
+        MsgBox "Please Enter the mobile no."
+        Text6.SetFocus
+    ElseIf Len(Text6.Text) <> 10 Then
+        MsgBox "Please Enter a valid Mobile number."
+        Text3.SetFocus
+    ElseIf InStr(Text5.Text, "@") = 0 Or InStr(Text5.Text, ".") = 0 Then
+        MsgBox "Invalid Email ID."
+        Text6.SetFocus
+    ElseIf Check2.Value = False Then
+        MsgBox "Please accept the Terms & Conditions"
+    Else
+    'Username taken or not
+            rs.Open "select username from login", conn, adOpenDynamic, adLockOptimistic
+            rs.MoveFirst 'position row pointer on first row of recordset
+            Do While (rs.EOF = False)
+               'fetch data of cols of current row
+                    If rs.Fields(0) = UCase(Text2.Text) Then
+                        rs.Close
+                        MsgBox "UserName already Taken" & vbCrLf & "Choose another username"
+                        GoTo d
+                    End If
+                'move to next row
+                rs.MoveNext
+            Loop
+            rs.Close
+        'all correct add user
+        'Save details in login table as normalUser
+        'i.e type 0
+        ' insert into login values(          username,              password,    type,    sname,                                             sdob    ,                      sphone,             s_email);
+        sql = "INSERT into login values(UPPER('" & Text2.Text & "'),'" & Text3.Text & "'," & CreateType & ",'" & Text1.Text & "','" & Combo2.Text & "-" & Combo3.Text & "-" & Combo1.Text & "','" & Text6.Text & "','" & Text5.Text & "')"
+        conn.Execute sql
+        
+        sql = "commit"
+        conn.Execute sql
+        MsgBox "You are successfully Registered"
+        Unload Me
+    End If
+
+d:  CreateType = "0"
+End Sub
+
+'regErr:
+ '       MsgBox Err.Description
+
+'End Sub
+
+Private Sub Form_Load()
+    Dim i As Single
+    Dim n As Single
+    Dim y As String
+    
+    For i = 1980 To 2013
+        y = Str(i)
+        n = i - 1980
+        Combo1.AddItem y, n
+    Next
+    
+    Combo1.ListIndex = 0
+    Combo2.ListIndex = 0
+    Combo3.ListIndex = 0
+End Sub
+
+Private Sub Text1_KeyPress(keyascii As Integer) 'name
+    If Not ((keyascii >= 97 And keyascii <= 122) Or (keyascii >= 65 And keyascii <= 96) Or (keyascii = 32) Or (keyascii = 13) Or (keyascii = 8)) Then
+        Text1.Text = ""
+        keyascii = 0
+        MsgBox "Please Enter alphabets only"
+        Text1.SetFocus
+    End If
+End Sub
+
+Private Sub Text3_KeyPress(keyascii As Integer) 'mobile no.
+    If Not ((keyascii >= 48 And keyascii <= 58) Or (keyascii = 13) Or (keyascii = 8) Or (keyascii >= 97 And keyascii <= 122) Or (keyascii >= 65 And keyascii <= 96)) Then
+        Text3.Text = ""
+        MsgBox "Only alphabets or numbers allowed"
+        Text3.SetFocus
+    End If
+End Sub

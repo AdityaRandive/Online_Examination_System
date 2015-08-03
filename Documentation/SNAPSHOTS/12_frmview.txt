@@ -1,0 +1,29 @@
+//FORM VIEW
+Dim rs As New ADODB.Recordset
+
+Private Sub Form_Load()
+    Dim sql As String
+    
+    Label1.Caption = "ONLINE EXAM REPORT OF : " & uname
+    sql = "select * from fullreport where username = '" & uname & "'"
+    rs.Open sql, conn, adOpenDynamic, adLockOptimistic
+    
+    If rs.EOF Then
+        MsgBox "No tests given yet"
+        GoTo e
+    End If
+    rs.MoveFirst
+
+    Dim n As Single
+    
+    RichTextBox1.Text = "no. )     USERNAME     TESTNAME            MARKS        TEST DATE       TEST TIME" & vbCrLf
+    Do Until rs.EOF
+        n = 1
+        RichTextBox1.Text = RichTextBox1.Text & n & " )     " & rs.Fields(0) & "     " & rs.Fields(1) & "            " & rs.Fields(2) & "        " & rs.Fields(3) & "       " & rs.Fields(4) & vbCrLf
+        rs.MoveNext
+        n = n + 1
+    Loop
+e:
+    rs.Close
+End Sub
+

@@ -1,0 +1,43 @@
+//Login
+Dim rs As Recordset
+
+Private Sub Command1_Click(Index As Integer)   'login
+   
+    'to be secured from deleted account
+    If Text1(1).Text = vbNullString And Index = 0 Then
+        MsgBox "Wrong Username or Password", vbCritical + vbOKOnly
+        Text1(1).SetFocus
+        GoTo e
+    End If
+        
+    loginOK = False 'fro n attempts
+    entrypoint.CreateAccount = False
+           
+    If Index = 0 Then   'User
+        loginverification Text1(0).Text, Text1(1).Text
+        If loginOK = True Then
+            MDIadmin.Show
+            Unload Me
+        End If
+    ElseIf Index = 1 Then   'Create New User
+        entrypoint.CreateAccount = True
+        MDIadmin.Show
+        Unload Me
+    End If
+        
+e:
+End Sub
+
+Private Sub Command2_Click()
+    entrypoint.exitpoint
+End Sub
+
+Private Sub Form_Load()
+    loginOK = False
+End Sub
+
+Private Sub Text1_KeyPress(Index As Integer, keyascii As Integer)
+    If keyascii = 13 Then
+        Command1_Click (0)  'On enter key press call login command
+    End If
+End Sub

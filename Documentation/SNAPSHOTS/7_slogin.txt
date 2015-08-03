@@ -1,0 +1,31 @@
+//slogin
+Option Explicit
+
+Private Sub Command1_Click(Index As Integer)
+       
+    Select Case Index
+        
+        Case 0  'Give Exam
+                MDIadmin.Hide
+                Load frmexam_select
+                frmexam_select.Show
+        
+        Case 1  'Chang Password
+                Load frmChangePassword
+                frmChangePassword.Show
+        
+        Case 2  'Delete account
+                DeleteAccount
+                
+        Case 3  'LogOut
+                'conn.Execute "DELETE FROM report where rid = '" & uname & "'"
+                'conn.Execute "commit"
+                conn.Execute "delete from report where rid = '" & uname & "'"
+                
+                uname = "---UNKNOWN---"
+                Unload MDIadmin
+        Case 4: 'Student Report
+                Load frmView
+    End Select
+End Sub
+

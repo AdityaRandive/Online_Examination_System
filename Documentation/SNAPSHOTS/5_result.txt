@@ -1,0 +1,38 @@
+//RESULT
+Dim rs As New ADODB.Recordset
+
+Private Sub Form_Load()
+    
+    Label2(4).Caption = time
+    Label2(5).Caption = Date
+    
+    rs.Open "select * from report where rid = '" & uname & "'", conn, adOpenDynamic, adLockOptimistic
+    rs.MoveFirst
+    
+    Label2(0).Caption = UCase(uname)
+    Label2(2).Caption = rs.Fields(1)
+    
+    If rs.Fields(1) > 12 Then
+        Label2(3).Caption = "YOU ARE PASSED"
+    Else
+        Label2(3).Caption = "YOU ARE FAILED"
+    End If
+    Dim t As String
+    Dim d As String
+    Dim sql As String
+    
+    t = time
+    d = Date
+    
+    sql = "insert into fullreport values('" & uname & "','" & Examtable & "','" & rs.Fields(1) & "','" & d & "','" & t & "')"
+    
+    conn.Execute sql
+    
+    rs.Close
+End Sub
+
+
+
+Private Sub Form_Unload(Cancel As Integer)
+ Unload frmexam
+End Sub

@@ -1,0 +1,40 @@
+//CHANGE PASSWORD
+Option Explicit
+
+Private Sub Command1_Click(Index As Integer)
+    
+    If Index = 1 Then
+        Unload Me
+    End If
+    
+    Dim sql As String
+    Dim rs As New ADODB.Recordset
+        
+    rs.Open "select * from login where username = '" & uname & "'", conn, adOpenDynamic, adLockOptimistic
+    rs.MoveFirst
+    
+    If Index = 0 Then
+        If Text1(1).Text <> Text1(2).Text Then
+            MsgBox "NEW PASSWORDS DOES NOT MATCH", vbOKOnly + vbExclamation, "ERROR"
+            Text1(1).SetFocus
+        ElseIf Text1(1).Text = vbNullString Or Text1(2).Text = vbNullString Then
+            MsgBox "ENTER NEW PASSWORD", vbOKOnly + vbExclamation, "ERROR"
+            Text1(1).SetFocus
+        ElseIf Text1(0).Text = rs.Fields(0) Then
+             sql = "update login set password = '" & Text1(1).Text & "' where username = "
+             sql = sql & "'" & uname & "'"
+             conn.Execute sql
+             sql = "commit"
+             conn.Execute sql
+             rs.Close
+             MsgBox "PASSWORD UPDATED SUCCESSFULLY", vbOKOnly + vbMsgBoxRight, "SUCCESS"
+        Else
+            MsgBox "WRONG PASSWORD", vbOKOnly + vbExclamation, "ERROR"
+            Text1(0).SetFocus
+        End If
+    Else
+        rs.Close
+    End If
+   Unload Me
+End Sub
+

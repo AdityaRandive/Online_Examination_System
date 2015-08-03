@@ -1,0 +1,21 @@
+//MDI_Admin
+Option Explicit
+
+Private Sub MDIForm_Load()
+    
+    If entrypoint.LoginType = 3 Then
+        frmAdmin.Show
+        entrypoint.LoginType = 0
+    ElseIf entrypoint.CreateAccount = True Then
+        frmcreate.Show
+        entrypoint.CreateAccount = False
+    Else    'Student Login type = 0
+        Load frmStudent
+        frmStudent.Show
+    End If
+End Sub
+
+Private Sub MDIForm_Unload(Cancel As Integer)
+    frmlogin.Show
+    conn.Execute "delete from report where rid = '" & uname & "'"
+End Sub

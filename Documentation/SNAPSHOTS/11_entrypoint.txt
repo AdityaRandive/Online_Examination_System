@@ -1,0 +1,154 @@
+//ENTRYPOINT
+Option Explicit
+Public conn As New ADODB.Connection
+Public uname As String
+Public CreateType As String
+Public Examtable As String
+Public adminLogin As Boolean
+Public LoginType As String
+Public CreateAccount As Boolean
+Public loginOK As Boolean
+
+Public score As String
+
+Public Sub Main()
+        'On Error Resume Next
+        
+        CreateAccount = False
+        CreateType = "0"
+        uname = ""
+        
+        Dim connectionType As String
+        'connectionType = "MSACCESS"
+        connectionType = "SQLSERVER"
+        '---------------------------------------------------------------
+        
+        'Folder
+        If Dir("C:\Program Files\VBproject", vbDirectory) = vbNullString Then
+            MkDir "C:\Program Files\VBproject"
+        End If
+        
+        'File
+        If Dir("C:\Program Files\VBproject\project.mdb") = vbNullString Then
+            FileCopy CurDir & "\project.mdb", "C:\Program Files\VBproject\project.mdb"
+        End If
+        
+        If Dir("C:\Program Files\VBproject\Timer.ocx") = vbNullString Then
+            FileCopy CurDir & "\Timer\Timer.ocx", "C:\Program Files\VBproject\Timer.ocx"
+        End If
+        
+                            
+        '---------------------------------------------------------------
+        'Connection
+        If connectionType = "MSACCESS" Then
+            conn.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\project.mdb;Mode=ReadWrite|Share Deny None;Persist Security Info=True"
+        ElseIf connectionType = "SQLSERVER" Then
+            conn.ConnectionString = "Provider=MSDAORA.1;Password=tiger;User ID=scott;Data Source=compora;Persist Security Info=True"
+        End If
+            
+        'Opens Connection
+        conn.Open
+         
+        LoginType = 0   'Student
+     
+        frmlogin.Show
+
+        LoginType = 0
+        adminLogin = False
+        
+End Sub
+
+Public Sub exitpoint()
+    
+    conn.Execute "delete from report where rid = '" & uname & "'"
+    
+    If conn.State = adStateOpen Then
+        conn.Close
+    End If
+    
+    End
+End Sub
+
+Public Sub loginverification(id As String, pass As String)           'Login
+    Dim rs As New ADODB.Recordset
+    Dim m As String
+    Dim sql As String
+    On Error GoTo LErr
+    
+    'Check If User have already Logged IN
+    'No multiple logins of SAME USER
+    
+    rs.Open "select * from report", conn, adOpenDynamic, adLockOptimistic
+    rs.MoveFirst
+    
+    Do While rs.EOF = False
+        If UCase(rs.Fields(0)) = UCase(id) Then
+            m = "You are Already Logged in some system" & vbCrLf
+            m = m & "Please log out From there First"
+            MsgBox m, vbCritical, "LOGIN FAILED"
+            rs.Close
+            GoTo e
+        Else
+            rs.MoveNext
+        End If
+    Loop
+    
+    rs.Close    'Of Above connection
+    
+    rs.Open "select * from login", conn, adOpenDynamic, adLockOptimistic
+    rs.MoveFirst 'position row pointer on first row of recordset
+    
+    Do While (rs.EOF = False)
+       'fetch data of cols of current row
+            If UCase(rs.Fields(0)) = UCase(id) And rs.Fields(1) = pass Then
+                uname = UCase(rs.Fields(0)) 'Required to display in frmexam
+                LoginType = rs.Fields(2)
+                rs.Close
+                loginOK = True
+                
+                'INSERT USERNAME INTO REPORT TABLE AS TO AVOID MULTIPLE LOGIN OF SAME USER
+                 sql = "insert into report values('" & uname & "',0)"
+                 conn.Execute sql
+                'conn.Execute "commit"
+                GoTo e
+            End If
+            
+        'move to next row
+        rs.MoveNext
+    Loop
+    rs.Close
+    MsgBox "Wrong Username or Password", vbCritical + vbOKOnly
+
+LErr:
+    MsgBox Err.Description
+e:
+End Sub
+
+
+Public Sub DeleteAccount()
+    Dim ans As String
+    Dim rs As New ADODB.Recordset
+    
+    Set rs = entrypoint.conn.Execute("select password from login where username = '" & uname & "'")
+    rs.MoveFirst
+            
+    ans = InputBox("Confirm your Password Here ", "DELETE ACCOUNT")
+    If ans = rs.Fields(0) Then
+        If vbYes = MsgBox("Do you want to really DELETE your ACCOUNT", vbYesNo + vbQuestion, "CONFIRM") Then
+            ans = "UPDATE login SET password = '' WHERE username = '" & entrypoint.uname & "'"
+            conn.Execute ans
+            MsgBox "ACCOUNT DELETED SUCCESSFULLY", vbOKOnly
+            rs.Close
+            Unload MDIadmin
+            GoTo e
+        Else
+            rs.Close
+            GoTo e
+        End If
+    Else
+        MsgBox "Wrong Password", vbOKOnly + vbCritical, "DELETE"
+    End If
+    rs.Close
+e:
+End Sub
+

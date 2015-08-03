@@ -1,0 +1,50 @@
+//TIMER
+Option Explicit
+Dim min As Single
+Dim sec As Single
+Dim flag As Boolean
+
+Private Sub Timer1_Timer()
+    Label1.Caption = "Remaining Time : " & min & ":" & sec
+    sec = sec - 1
+        
+    If flag = False Then
+      Label1.Caption = "Remaining Time : " & min & ":" & sec
+      If sec = 0 Then
+          min = min - 1
+      Label1.Caption = "Remaining Time : " & min & ":" & sec
+          sec = 59
+      Label1.Caption = "Remaining Time : " & min & ":" & sec
+      End If
+    Else
+        If sec = 0 Then
+            min = 0
+            sec = 0
+            Label1.Caption = "Remaining Time : " & min & ":" & sec
+            Timer1.Enabled = False
+        End If
+        Label1.Caption = "Remaining Time : " & min & ":" & sec
+    End If
+    
+    
+    If min = 0 And flag = False Then
+            Label1.Caption = "Remaining Time : " & min & ":" & sec
+            min = 0
+            flag = True
+    End If
+    
+    If min = 9 Then
+            Frame1.BackColor = vbRed
+    End If
+    
+End Sub
+
+Private Sub UserControl_Initialize()
+    min = 29    'ExamTime -1
+    sec = 59
+    Label1.Caption = "Remaining Time : " & min & ":" & sec
+    flag = False
+        
+    Timer1.Interval = 1000
+    Timer1.Enabled = True
+End Sub
