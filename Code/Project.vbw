@@ -1,0 +1,14 @@
+frmlogin = 0, 0, 0, 0, C, 88, 116, 952, 572, C
+entrypoint = 54, 63, 1021, 527, 
+frmexam = 0, 0, 0, 0, C, 132, 174, 996, 630, C
+MDIadmin = 0, 0, 0, 0, C, 154, 203, 1018, 659, C
+frmexam_select = 0, 0, 0, 0, C, 0, 0, 864, 456, C
+frmcreate = 0, 0, 0, 0, C, 22, 29, 886, 485, C
+frmAdmin = 0, 0, 0, 0, C, 44, 58, 908, 514, C
+frmView = 0, 0, 0, 0, C, 66, 87, 930, 543, C
+frmStudent = 0, 0, 0, 0, C, 88, 116, 952, 572, C
+compora = 0, 0, 0, 0, C, 22, 29, 1048, 722, C
+SHORT_REPORT = 0, 0, 0, 0, C, 66, 87, 1432, 855, C
+frmChangePassword = 0, 0, 0, 0, C, 132, 174, 996, 630, C
+frmDataGrid = 0, 0, 0, 0, C, 154, 203, 1018, 659, C
+frmResult = 0, 0, 0, 0, C, 0, 0, 864, 456, C

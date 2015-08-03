@@ -1,0 +1,68 @@
+create table login(
+                  username varchar(20) PRIMARY KEY,
+                  password varchar(20),
+                  type number	       NOT NULL,
+                  sname varchar(30),
+                  sdob date,
+                  sphone varchar(15),
+                  s_email varchar(50)
+                  );   
+
+/------------------------------------------
+create table c
+(
+   ID       number        PRIMARY KEY,
+   question varchar(500),
+   option1  varchar(200),
+   option2  varchar(200),
+   option3  varchar(200),
+   answer   varchar(200)  NOT NULL
+);
+/------------------------------------------
+create table cpp
+(
+   ID       number        PRIMARY KEY,
+   question varchar(500),
+   option1  varchar(200),
+   option2  varchar(200),
+   option3  varchar(200),
+   answer   varchar(200)  NOT NULL
+);
+
+/------------------------------------------
+create table sql
+(
+   ID       number        PRIMARY KEY,
+   question varchar(500),
+   option1  varchar(200),
+   option2  varchar(200),
+   option3  varchar(200),
+   answer   varchar(200)  NOT NULL
+);
+
+/------------------------------------------
+create table csharpe
+(
+   ID       number        PRIMARY KEY,
+   question varchar(500),
+   option1  varchar(200),
+   option2  varchar(200),
+   option3  varchar(200),
+   answer   varchar(200)  NOT NULL
+);
+
+/------------------------------------------
+create table report
+(
+   rid  varchar2(20) PRIMARY KEY,
+   score number	NOT NULL
+);
+
+/------------------------------------------
+create table fullreport(
+                        username varchar(50),                     
+                        testname varchar(50),
+                        marks number,
+                        testdate varchar(50),
+                        testtime varchar(50)                        
+                       );
